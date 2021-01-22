@@ -1,10 +1,10 @@
 version: '2'
 
 networks:
-  laravel:
+  laraveltesting:
 
 services:
-  site:
+  laraveltesting:
     build:
       context: .
       dockerfile: nginx.dockerfile
@@ -17,7 +17,7 @@ services:
       - php
       - mysql
     networks:
-      - laravel
+      - laraveltesting
 
   mysql:
     image: mysql:5.7.29
@@ -34,7 +34,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
-      - laravel
+      - laraveltesting
 
   php:
     build:
@@ -44,7 +44,7 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
     networks:
-      - laravel
+      - laraveltesting
 
   composer:
     build:
@@ -59,7 +59,7 @@ services:
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
-      - laravel
+      - laraveltesting
 
   npm:
     image: node:13.7
@@ -69,7 +69,7 @@ services:
     working_dir: /var/www/html
     entrypoint: ['npm']
     networks:
-      - laravel
+      - laraveltesting
 
   artisan:
     build:
@@ -84,4 +84,4 @@ services:
     user: laravel
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - laravel
+      - laraveltesting
